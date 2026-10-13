@@ -30,16 +30,15 @@
 | 환경 | 스킬 문서 | 이미지 생성 | 디자인·구현 |
 | --- | --- | --- | --- |
 | Codex | 공통 Agent Skills 형식 | 설치된 `imagegen` 스킬과 내장 이미지 도구가 필요 | 설치·인증된 OpenDesign + Local Codex |
-| OpenCode | 같은 `SKILL.md`를 읽는 형식 | 해당 호스트의 이미지 도구가 필요; 준비된 이미지 재사용 가능 | 사용 가능한 OpenDesign 연결, 또는 사용자가 선택한 직접 구현 |
 
-OpenCode에 이 스킬을 넣는 것만으로 Codex 이미지 도구가 연결되지는 않습니다. 도구가 없는 단계는 미완료로 알리고, 유료 API·Cloud·BYOK로 자동 전환하지 않습니다.
+스킬과 이미지 생성은 **Codex**, 선택한 디자인 제작은 **OpenDesign(Local Codex)**에서 진행합니다. 스킬 설치만으로 OpenDesign이 설치되거나 인증되지는 않습니다. 도구가 없는 단계는 미완료로 알리고, 유료 API·Cloud·BYOK로 자동 전환하지 않습니다.
 
 ## 설치
 
 기존 `skills` CLI를 이용하는 선택 경로입니다. Node.js/npm이 필요하며, 이 명령은 외부 설치 도구를 실행합니다.
 
 ```sh
-npx skills add dudqks0319-cpu/app-design-five --skill app-design-five -g -a codex -a opencode
+npx skills add dudqks0319-cpu/app-design-five --skill app-design-five -g -a codex
 ```
 
 별도 설치 도구 없이 쓰려면 GitHub에서 ZIP을 내려받거나 저장소를 복제한 후 **저장소 폴더 안에서** 다음을 실행합니다. 같은 이름의 기존 스킬은 덮어쓰지 않습니다.
@@ -71,11 +70,11 @@ $app-design-five로 디자인만 제안해줘. 코드는 아직 수정하지 마
 1번의 목록 구조와 4번의 색감을 섞어줘. 글자는 더 크게 해줘.
 ```
 
-OpenCode에서 준비된 이미지를 이용하는 예:
+준비된 이미지로 OpenDesign 제작을 이어가는 예:
 
 ```text
-app-design-five 스킬을 사용해줘. 준비된 이미지 중 3번을 선택할게.
-이번에는 OpenDesign 대신 현재 OpenCode 프로젝트에 구현해줘.
+$app-design-five를 사용해줘. 준비된 이미지 중 3번을 선택할게.
+이 방향으로 OpenDesign(Local Codex)에서 디자인을 만들고 앱에 반영해줘.
 ```
 
 사용자의 선택, 실행 방식, 구현·검증 범위를 유지합니다. 이 스킬 자체는 추가 에이전트, 결제, 공개 배포나 GitHub 게시를 승인하지 않습니다.
@@ -84,7 +83,7 @@ app-design-five 스킬을 사용해줘. 준비된 이미지 중 3번을 선택�
 
 - 스킬 형식·내부 문서 링크·로컬 설치 파일 일치 확인을 마쳤으며, Codex 스킬 카탈로그에 노출된 것을 확인했습니다.
 - 이 스킬을 사용한 실제 이미지 5장 생성 → OpenDesign → 앱 구현의 전체 흐름은 아직 검증하지 않았습니다.
-- OpenCode의 실제 실행과 외부 설치 CLI 명령도 이 프로젝트에서 아직 검증하지 않았습니다.
+- 외부 설치 CLI 명령은 이 프로젝트에서 아직 검증하지 않았습니다.
 - 이미지, 디자인 결과, 소스 구현, 로컬 검사, 실제 기기와 출시 상태를 각각 실제 근거에 따라 보고합니다. 검증을 생략하면 생략했다고 알립니다.
 
 ## 파일과 개인정보
@@ -97,4 +96,4 @@ app-design-five 스킬을 사용해줘. 준비된 이미지 중 3번을 선택�
 
 [MIT 라이선스](LICENSE). 사용자에게 소개받은 [oil-ui](https://github.com/oil-oil/oil-ui)의 여러 방향 비교 취지를 참고한 독립 스킬입니다. 해당 저장소의 코드·스킬 본문·이미지를 포함하지 않았습니다.
 
-[Agent Skills 표준](https://agentskills.io/home) · [Codex 스킬](https://learn.chatgpt.com/docs/build-skills) · [OpenCode 스킬](https://opencode.ai/docs/skills/) · [skills CLI](https://github.com/vercel-labs/skills) · [MCP](https://modelcontextprotocol.io/docs/learn/architecture)
+[Agent Skills 표준](https://agentskills.io/home) · [Codex 스킬](https://learn.chatgpt.com/docs/build-skills) · [OpenDesign](https://open-design.ai/) · [skills CLI](https://github.com/vercel-labs/skills) · [MCP](https://modelcontextprotocol.io/docs/learn/architecture)

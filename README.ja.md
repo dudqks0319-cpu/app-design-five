@@ -30,16 +30,15 @@
 | ホスト | スキル文書 | 画像生成 | デザイン・実装 |
 | --- | --- | --- | --- |
 | Codex | 共通の Agent Skills 形式 | インストール済みの `imagegen` スキルと内蔵画像ツールが必要 | インストール・認証済みの OpenDesign + Local Codex |
-| OpenCode | 同じ `SKILL.md` 形式 | そのホストで利用できる画像ツールが必要。既存の画像案も再利用可能 | 利用可能な OpenDesign 接続、またはユーザーが明示的に選んだ直接実装 |
 
-OpenCode にこのスキルを入れるだけで Codex の画像ツールが接続されるわけではありません。必要なツールがない段階は未完了として伝え、有料 API、Cloud、BYOK には自動で切り替えません。
+スキルと画像生成は **Codex** で実行し、選んだデザインは **OpenDesign の Local Codex モード**で制作します。スキルを入れるだけでは OpenDesign のインストールや認証は行われません。必要なツールがない段階は未完了として伝え、有料 API、Cloud、BYOK には自動で切り替えません。
 
 ## インストール
 
 既存の `skills` CLI を使う任意の方法です。Node.js/npm が必要で、外部インストールツールを実行します。
 
 ```sh
-npx skills add dudqks0319-cpu/app-design-five --skill app-design-five -g -a codex -a opencode
+npx skills add dudqks0319-cpu/app-design-five --skill app-design-five -g -a codex
 ```
 
 別のインストールツールを使わない場合は、リポジトリの ZIP をダウンロードするかクローンした後、**リポジトリのフォルダー内で**次を実行します。同じ名前の既存スキルは上書きしません。
@@ -71,11 +70,11 @@ $app-design-five でデザインだけ提案してください。アプリのコ
 案 1 のリスト構成と案 4 の配色を組み合わせてください。文字はもっと大きくしてください。
 ```
 
-OpenCode で既存の画像案を使う例：
+既存の画像案を使って OpenDesign で続ける例：
 
 ```text
-app-design-five スキルを使ってください。既存の画像から案 3 を選びます。
-今回は OpenDesign ではなく、現在の OpenCode プロジェクトに実装してください。
+$app-design-five を使ってください。既存の画像から案 3 を選びます。
+この方向を OpenDesign の Local Codex モードでデザインし、アプリに反映してください。
 ```
 
 ユーザーの選択、実行モード、実装・検証の範囲を維持します。このスキル自体は追加エージェント、支払い、デプロイ、GitHub 公開を許可するものではありません。
@@ -84,7 +83,7 @@ app-design-five スキルを使ってください。既存の画像から案 3 �
 
 - スキル形式、文書内リンク、ローカルインストールファイルの一致を確認し、Codex のスキルカタログに表示されることも確認しました。
 - このスキルを使った「画像 5 枚 → OpenDesign → アプリ実装」の全体の流れは、まだ実行して検証していません。
-- OpenCode の実際の動作と外部インストール CLI コマンドも、このプロジェクトではまだ検証していません。
+- 外部インストール CLI コマンドは、このプロジェクトではまだ検証していません。
 - 画像、デザイン結果、ソース実装、ローカル確認、実機での使用、リリース状況を、それぞれ観測した根拠に基づいて報告します。検証を省略した場合は明示します。
 
 ## ファイルとプライバシー
@@ -97,4 +96,4 @@ app-design-five スキルを使ってください。既存の画像から案 3 �
 
 [MIT ライセンス](LICENSE)。ユーザーが紹介した [oil-ui](https://github.com/oil-oil/oil-ui) の複数の方向を比較する考え方を参考にした独立したスキルです。同リポジトリのコード、スキル本文、画像は含めていません。
 
-[Agent Skills 標準](https://agentskills.io/home) · [Codex スキル](https://learn.chatgpt.com/docs/build-skills) · [OpenCode スキル](https://opencode.ai/docs/skills/) · [skills CLI](https://github.com/vercel-labs/skills) · [MCP](https://modelcontextprotocol.io/docs/learn/architecture)
+[Agent Skills 標準](https://agentskills.io/home) · [Codex スキル](https://learn.chatgpt.com/docs/build-skills) · [OpenDesign](https://open-design.ai/) · [skills CLI](https://github.com/vercel-labs/skills) · [MCP](https://modelcontextprotocol.io/docs/learn/architecture)

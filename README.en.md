@@ -30,16 +30,15 @@ This repository is a **skill package**. It does not include a standalone MCP ser
 | Host | Skill instructions | Image generation | Design and implementation |
 | --- | --- | --- | --- |
 | Codex | Shared Agent Skills format | Installed `imagegen` skill and a built-in image tool | Installed and authenticated OpenDesign + Local Codex |
-| OpenCode | Same `SKILL.md` format | An image tool available in that host; existing concepts can be reused | An available OpenDesign connection, or direct implementation explicitly chosen by the user |
 
-Installing this skill in OpenCode does not connect Codex's image tool. Missing capabilities remain incomplete; the skill does not automatically switch to a paid API, Cloud or BYOK.
+**Codex** hosts this skill and generates the images; **OpenDesign with Local Codex** creates the selected design. Installing the skill does not install or authenticate OpenDesign. Missing capabilities remain incomplete; the skill does not automatically switch to a paid API, Cloud or BYOK.
 
 ## Installation
 
 Optional installation with the existing `skills` CLI. It requires Node.js/npm and runs an external installer.
 
 ```sh
-npx skills add dudqks0319-cpu/app-design-five --skill app-design-five -g -a codex -a opencode
+npx skills add dudqks0319-cpu/app-design-five --skill app-design-five -g -a codex
 ```
 
 To avoid a separate installer, download the repository ZIP or clone the repository, then run the following **from inside the repository folder**. An existing skill with the same name is preserved.
@@ -71,11 +70,11 @@ Use $app-design-five for design proposals only. Do not change the app code yet.
 Combine option 1's list structure with option 4's colors. Make the type larger.
 ```
 
-OpenCode with existing concepts:
+Continue in OpenDesign with existing concepts:
 
 ```text
-Use the app-design-five skill. I choose option 3 from the existing images.
-For this task, implement it in the current OpenCode project instead of OpenDesign.
+Use $app-design-five. I choose option 3 from the existing images.
+Create this direction in OpenDesign with Local Codex, then apply it to the app.
 ```
 
 Preserve the user's choice, execution mode and implementation/verification scope. This skill does not itself authorize additional agents, purchases, deployment or GitHub publication.
@@ -84,7 +83,7 @@ Preserve the user's choice, execution mode and implementation/verification scope
 
 - Skill structure, internal document links and installed-file consistency have been checked; the skill was observed in Codex's skill catalog.
 - The complete five-image → OpenDesign → app implementation workflow using this skill has not yet been exercised.
-- OpenCode runtime behavior and the external installation CLI command have not yet been exercised for this project.
+- The external installation CLI command has not yet been exercised for this project.
 - Report images, design results, source implementation, local checks, real-device use and release status separately, based on observed evidence. Disclose skipped verification.
 
 ## Files and privacy
@@ -97,4 +96,4 @@ Generated images and private briefs belong in the target app's local task folder
 
 [MIT](LICENSE). This independent skill was inspired by the multiple-direction comparison idea in [oil-ui](https://github.com/oil-oil/oil-ui), introduced by the user. No code, skill text or images from that repository are included.
 
-[Agent Skills](https://agentskills.io/home) · [Codex skills](https://learn.chatgpt.com/docs/build-skills) · [OpenCode skills](https://opencode.ai/docs/skills/) · [skills CLI](https://github.com/vercel-labs/skills) · [MCP](https://modelcontextprotocol.io/docs/learn/architecture)
+[Agent Skills](https://agentskills.io/home) · [Codex skills](https://learn.chatgpt.com/docs/build-skills) · [OpenDesign](https://open-design.ai/) · [skills CLI](https://github.com/vercel-labs/skills) · [MCP](https://modelcontextprotocol.io/docs/learn/architecture)

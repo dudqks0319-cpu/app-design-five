@@ -3,13 +3,12 @@ name: app-design-five
 description: "Create five distinct app UI image concepts, let the user choose or combine them, then turn that direction into an OpenDesign design and app implementation. Use for new apps, full UI/UX redesigns, or an explicit image-first design request. Do not start this workflow for routine bug fixes or status questions."
 license: MIT
 metadata:
-  version: "0.1.0"
-  opencode/slash: "true"
+  version: "0.1.1"
 ---
 
 # App Design Five — five images before implementation
 
-Follow this sequence: **five real UI images → user choice/feedback → design creation → authorized app implementation**. Defaults are Codex's built-in image generation and OpenDesign with Local Codex. OpenCode can load this skill, but loading instructions does not supply missing image or design tools.
+Follow this sequence: **five real UI images in Codex → user choice/feedback → design creation in OpenDesign with Local Codex → authorized app implementation**. Codex hosts the skill and image generation; OpenDesign creates the selected design. Loading this skill does not supply missing image or design tools.
 
 ## Start or resume
 
@@ -44,8 +43,6 @@ Wait before starting the selected design when the choice is missing. Meanwhile, 
 Build the handoff using [the handoff template](references/design-handoff.md). Supply the selected image files when the tool supports them, plus the explicit visual decisions and functional requirements. If image attachment is unavailable, say so and use a written handoff; do not claim the tool saw the images.
 
 Use the installed OpenDesign skill with **Local Codex** unless the user has chosen another route. Read its current workflow and use its real tool schemas. Reuse the target project where appropriate, preserve stable request/run identifiers, and follow the same run to a terminal result. A started job, an open Studio tab or a success flag with a missing deliverable is not a completed design.
-
-If the user explicitly chooses direct implementation in OpenCode or another agent instead of OpenDesign, record that changed route and implement the selected direction in the authorized project. Report that route accurately. Do not substitute it silently when OpenDesign fails.
 
 ## 5. Implement and report within scope
 

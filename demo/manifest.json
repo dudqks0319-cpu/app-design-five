@@ -1,0 +1,92 @@
+{
+  "date": "2026-10-13",
+  "fictionalData": true,
+  "files": [
+    {
+      "path": "app/index.html",
+      "bytes": 20988,
+      "sha256": "eb23cb8abe9f6b5d381ca55f84fc0a8f23523d8463a91de880fe88fb5bc1cec5"
+    },
+    {
+      "path": "images/01-quiet-list.png",
+      "bytes": 1110518,
+      "sha256": "448889e242f7d0233427567932de55ffc258c0adc87cdc3e6587258e72acd739",
+      "pixelSize": [
+        853,
+        1844
+      ]
+    },
+    {
+      "path": "images/02-focus-split.png",
+      "bytes": 1102704,
+      "sha256": "2e095607d9b5d3b6e8c84338e06631c36994ada9820b2c1a67d3ba3cf46e92c9",
+      "pixelSize": [
+        853,
+        1844
+      ]
+    },
+    {
+      "path": "images/03-daily-paper.png",
+      "bytes": 1024124,
+      "sha256": "156ee7789b45749dc5c861c8c8606649fee8b1611420e7c2d0e77116a9f38e1b",
+      "pixelSize": [
+        853,
+        1844
+      ]
+    },
+    {
+      "path": "images/04-soft-steps.png",
+      "bytes": 1079635,
+      "sha256": "627ded855b4033680e57569e55eff211a3b3ea1c14b2fb767bd00ef193e14163",
+      "pixelSize": [
+        853,
+        1844
+      ]
+    },
+    {
+      "path": "images/05-night-console.png",
+      "bytes": 1123830,
+      "sha256": "5b2712f3f8e20fcee6b6d9b1d949975e8e737a4590b251dc818cc361972a4dc1",
+      "pixelSize": [
+        853,
+        1844
+      ]
+    },
+    {
+      "path": "screenshots/app-added-completed.png",
+      "bytes": 56529,
+      "sha256": "97b48ba421a31074f2bcf5be87e5e7a289b4692f6be35441f142a7947a454c89",
+      "pixelSize": [
+        780,
+        1688
+      ]
+    },
+    {
+      "path": "screenshots/desktop-1280x900.png",
+      "bytes": 82808,
+      "sha256": "468f12cca9c17ad16ebb37dd46982d1e6bc3b792517e6fa8d43af45fed26ec72",
+      "pixelSize": [
+        2880,
+        1800
+      ]
+    },
+    {
+      "path": "screenshots/five-concepts.png",
+      "bytes": 1874651,
+      "sha256": "638b0b0ee0633453cbd3aa0de6a3f2b71300fe2ede4dd957b12b9ef23327ac3d",
+      "pixelSize": [
+        2880,
+        1800
+      ]
+    },
+    {
+      "path": "screenshots/mobile-390x844.png",
+      "bytes": 50039,
+      "sha256": "2407181b76d77c398f08fe122eb102a21a341adc603634cfc0b197fae28dd36b",
+      "pixelSize": [
+        780,
+        1688
+      ]
+    }
+  ]
+}

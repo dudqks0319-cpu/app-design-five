@@ -1,0 +1,537 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <meta name="referrer" content="no-referrer">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline'; connect-src 'none'; img-src 'none'; font-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'">
+  <title>오늘 한 걸음</title>
+  <style>
+    :root {
+      --bg: oklch(0.997025 0 89.875563);
+      --surface: oklch(0.965727 0.005143 247.877194);
+      --fg: oklch(0 0 0);
+      --muted: oklch(0.662527 0.004998 258.331422);
+      --border: oklch(0.640936 0.001186 17.189822);
+      --accent: oklch(0.558195 0.227766 261.504270);
+      --font-display: "Apple SD Gothic Neo", "Malgun Gothic", system-ui, sans-serif;
+      --font-body: system-ui, -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+      --font-mono: ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+      --white: oklch(1 0 0);
+      --secondary: oklch(0.46 0.004998 258.331422);
+      --canvas: oklch(0.953 0.012 261.504270);
+      --accent-hover: oklch(0.478195 0.20 261.504270);
+      --focus: oklch(0.36 0.15 261.504270);
+      --segment: oklch(0.78 0.11 261.504270);
+      --error: oklch(0.43 0.16 27);
+      --error-surface: oklch(0.968 0.014 27);
+      --row-hover: oklch(0.935727 0.005143 247.877194);
+      --panel-shadow: 0 18px 60px oklch(0.3 0.03 261.504270 / 0.09);
+    }
+    * { box-sizing: border-box; }
+    html { min-width: 280px; background: var(--canvas); }
+    body {
+      margin: 0;
+      color: var(--fg);
+      font-family: var(--font-body);
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+    }
+    button, input { font: inherit; }
+    button { cursor: pointer; -webkit-tap-highlight-color: transparent; }
+    button, input, label { touch-action: manipulation; }
+    :focus-visible { outline: 3px solid var(--focus); outline-offset: 4px; }
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip-path: inset(50%);
+      white-space: nowrap;
+      border: 0;
+    }
+    .app {
+      width: 100%;
+      max-width: 480px;
+      min-height: 100svh;
+      margin-inline: auto;
+      background: var(--accent);
+      display: flex;
+      flex-direction: column;
+      isolation: isolate;
+    }
+    .hero {
+      padding: calc(45px + env(safe-area-inset-top, 0px)) 28px 48px;
+      color: var(--white);
+      background: var(--accent);
+    }
+    .date {
+      display: block;
+      margin: 0 0 10px;
+      font-size: 20px;
+      font-weight: 650;
+      line-height: 1.2;
+      letter-spacing: -0.03em;
+    }
+    h1 {
+      margin: 0;
+      font-family: var(--font-display);
+      font-size: clamp(36px, 10.8vw, 48px);
+      font-weight: 800;
+      line-height: 1.16;
+      letter-spacing: -0.055em;
+      word-break: keep-all;
+      overflow-wrap: anywhere;
+      text-wrap: balance;
+    }
+    .completion {
+      display: flex;
+      align-items: baseline;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin: 28px 0 0;
+    }
+    .fraction {
+      display: flex;
+      align-items: baseline;
+      gap: 11px;
+      font-size: clamp(62px, 19.4vw, 86px);
+      font-weight: 750;
+      line-height: 1;
+      letter-spacing: -0.06em;
+      font-variant-numeric: tabular-nums;
+    }
+    .fraction.is-wide { font-size: clamp(42px, 12.2vw, 58px); gap: 8px; }
+    .slash { font-size: 0.77em; font-weight: 400; }
+    .completion-label { font-size: 20px; font-weight: 700; letter-spacing: -0.025em; }
+    .progress-track {
+      display: flex;
+      gap: 4px;
+      height: 18px;
+      margin-top: 20px;
+    }
+    .progress-segment {
+      flex: 1 1 0;
+      min-width: 0;
+      border-radius: 6px;
+      background: var(--segment);
+    }
+    .progress-segment.is-complete { background: var(--white); }
+    .progress-track.is-dense { gap: 2px; }
+    .progress-track.is-dense .progress-segment { border-radius: 2px; }
+    .work-area {
+      position: relative;
+      flex: 1;
+      min-width: 0;
+      margin-top: -24px;
+      padding: 28px 20px calc(32px + env(safe-area-inset-bottom, 0px));
+      border-radius: 26px 26px 0 0;
+      background: var(--bg);
+    }
+    .add-fields { display: flex; align-items: stretch; gap: 8px; }
+    .task-input {
+      width: 100%;
+      min-width: 0;
+      min-height: 56px;
+      padding: 14px 16px;
+      border: 2px solid transparent;
+      border-radius: 12px;
+      color: var(--fg);
+      background: var(--surface);
+      font-size: 17px;
+      font-weight: 500;
+      line-height: 1.4;
+    }
+    .task-input::placeholder { color: var(--secondary); opacity: 1; }
+    .task-input:hover { border-color: var(--border); }
+    .task-input[aria-invalid="true"] { border-color: var(--error); }
+    .add-button {
+      flex: 0 0 76px;
+      min-height: 56px;
+      padding: 12px;
+      border: 0;
+      border-radius: 12px;
+      color: var(--white);
+      background: var(--accent);
+      font-size: 19px;
+      font-weight: 750;
+      line-height: 1.3;
+    }
+    .add-button:hover, .add-button:active { color: var(--white); background: var(--accent-hover); }
+    .form-feedback {
+      min-height: 20px;
+      margin: 7px 2px 9px;
+      color: var(--error);
+      font-size: 13px;
+      line-height: 1.5;
+      word-break: keep-all;
+      overflow-wrap: anywhere;
+    }
+    .task-list { display: grid; gap: 10px; margin: 0; padding: 0; list-style: none; }
+    .task-row {
+      display: grid;
+      grid-template-columns: 44px minmax(0, 1fr) 44px;
+      align-items: center;
+      gap: 10px;
+      min-height: 76px;
+      padding: 12px 10px 12px 16px;
+      border-radius: 14px;
+      background: var(--surface);
+    }
+    .task-checkbox {
+      appearance: none;
+      -webkit-appearance: none;
+      display: grid;
+      place-content: center;
+      width: 44px;
+      height: 44px;
+      margin: 0;
+      border: 2px solid var(--border);
+      border-radius: 10px;
+      color: var(--fg);
+      background: var(--white);
+      cursor: pointer;
+    }
+    .task-checkbox:hover { border-color: var(--fg); }
+    .task-checkbox:checked { border-color: var(--accent); color: var(--white); background: var(--accent); }
+    .task-checkbox:checked:hover { border-color: var(--accent-hover); color: var(--white); background: var(--accent-hover); }
+    .task-checkbox:checked::after {
+      content: "";
+      width: 18px;
+      height: 10px;
+      margin-top: -5px;
+      border-left: 3px solid currentColor;
+      border-bottom: 3px solid currentColor;
+      transform: rotate(-45deg);
+    }
+    .task-title {
+      display: flex;
+      align-items: center;
+      min-width: 0;
+      min-height: 44px;
+      font-size: 19px;
+      font-weight: 650;
+      line-height: 1.45;
+      letter-spacing: -0.045em;
+      word-break: keep-all;
+      overflow-wrap: anywhere;
+      cursor: pointer;
+    }
+    .delete-button {
+      display: grid;
+      place-items: center;
+      width: 44px;
+      height: 44px;
+      padding: 0;
+      border: 0;
+      border-radius: 8px;
+      color: var(--secondary);
+      background: transparent;
+    }
+    .delete-button:hover, .delete-button:active { color: var(--fg); background: var(--row-hover); }
+    .delete-button svg { width: 18px; height: 18px; pointer-events: none; }
+    .empty-state {
+      margin: 0;
+      padding: 46px 12px;
+      border-radius: 14px;
+      color: var(--secondary);
+      background: var(--surface);
+      font-size: 17px;
+      line-height: 1.5;
+      text-align: center;
+      word-break: keep-all;
+    }
+    .storage-message {
+      margin: 18px 0 0;
+      padding: 14px 16px;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      color: var(--error);
+      background: var(--error-surface);
+      font-size: 14px;
+      line-height: 1.6;
+      word-break: keep-all;
+      overflow-wrap: anywhere;
+    }
+    [hidden] { display: none !important; }
+    @media (min-width: 540px) {
+      body { padding: 32px 20px; }
+      .app { min-height: 844px; border-radius: 24px; box-shadow: var(--panel-shadow); }
+      .hero { border-radius: 24px 24px 0 0; padding-inline: 32px; }
+      .work-area { padding-inline: 24px; border-radius: 26px 26px 24px 24px; }
+    }
+    @media (max-width: 359px) {
+      .hero { padding-inline: 22px; }
+      .work-area { padding-inline: 16px; }
+      .task-input { padding-inline: 12px; font-size: 15px; }
+      .add-button { flex-basis: 64px; font-size: 18px; }
+      .task-row { gap: 8px; padding-left: 12px; padding-right: 8px; }
+      .task-title { font-size: 17px; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
+    }
+    @media (forced-colors: active) {
+      .task-checkbox { appearance: auto; -webkit-appearance: auto; }
+      .task-checkbox:checked::after { content: none; }
+      .add-button, .progress-segment { border: 1px solid ButtonText; }
+      .progress-segment.is-complete { background: Highlight; forced-color-adjust: none; }
+    }
+  </style>
+</head>
+<body>
+  <main class="app" data-od-id="today-step-app">
+    <header class="hero" data-od-id="progress-hero">
+      <time class="date" datetime="2026-10-13" data-od-id="sample-date">10월 13일</time>
+      <h1 data-od-id="app-title">오늘 한 걸음</h1>
+      <p class="completion" aria-live="polite" aria-atomic="true" data-od-id="completion-summary">
+        <span class="fraction" id="fraction" aria-hidden="true"><span id="completed-count">1</span><span class="slash">/</span><span id="total-count">3</span></span>
+        <span class="completion-label" aria-hidden="true">완료</span>
+        <span class="sr-only" id="progress-description">1 / 3 완료</span>
+      </p>
+      <div class="progress-track" id="progress-track" aria-hidden="true" data-od-id="segmented-progress">
+        <span class="progress-segment is-complete"></span><span class="progress-segment"></span><span class="progress-segment"></span>
+      </div>
+    </header>
+    <section class="work-area" aria-labelledby="task-section-title" data-od-id="task-work-area">
+      <h2 class="sr-only" id="task-section-title" data-od-id="task-section-title">오늘의 할 일</h2>
+      <form id="add-form" novalidate data-od-id="add-task-form">
+        <label class="sr-only" for="task-input" data-od-id="new-task-label">새 할 일 (최대 80자)</label>
+        <div class="add-fields">
+          <input class="task-input" id="task-input" name="task" type="text" maxlength="80" placeholder="할 일을 적어주세요" autocomplete="off" enterkeyhint="done" aria-describedby="form-feedback" data-od-id="new-task-input">
+          <button class="add-button" type="submit" data-od-id="add-task-button">추가</button>
+        </div>
+        <p class="form-feedback" id="form-feedback" aria-live="polite" aria-atomic="true" data-od-id="form-feedback"></p>
+      </form>
+      <ul class="task-list" id="task-list" data-od-id="task-list"></ul>
+      <p class="empty-state" id="empty-state" hidden data-od-id="empty-task-list">아직 할 일이 없어요.</p>
+      <p class="storage-message" id="storage-message" role="status" aria-live="polite" hidden data-od-id="storage-status"></p>
+      <p class="sr-only" id="action-status" aria-live="polite" aria-atomic="true"></p>
+      <noscript><p class="storage-message">할 일 추가·완료·삭제를 사용하려면 브라우저에서 자바스크립트를 켜주세요.</p></noscript>
+    </section>
+  </main>
+  <script>
+    (() => {
+      'use strict';
+      const STORAGE_KEY = 'app-design-five-demo-v1';
+      const MAX_TASKS = 100;
+      const MAX_TITLE_LENGTH = 80;
+      const MAX_STORAGE_BYTES = 64 * 1024;
+      const idPattern = /^[a-zA-Z0-9_-]{1,80}$/;
+      const form = document.getElementById('add-form');
+      const input = document.getElementById('task-input');
+      const feedback = document.getElementById('form-feedback');
+      const list = document.getElementById('task-list');
+      const emptyState = document.getElementById('empty-state');
+      const storageMessage = document.getElementById('storage-message');
+      const actionStatus = document.getElementById('action-status');
+      const fraction = document.getElementById('fraction');
+      const completedCount = document.getElementById('completed-count');
+      const totalCount = document.getElementById('total-count');
+      const progressDescription = document.getElementById('progress-description');
+      const progressTrack = document.getElementById('progress-track');
+      const encoder = new TextEncoder();
+      let storageAvailable = true;
+      let localIdCounter = 0;
+
+      function seedTasks() {
+        return [
+          { id: 'demo-water', title: '물 한 잔 마시기', completed: true },
+          { id: 'demo-walk', title: '10분 산책하기', completed: false },
+          { id: 'demo-book', title: '책 5쪽 읽기', completed: false }
+        ];
+      }
+
+      function showStorageMessage(message) {
+        storageMessage.textContent = message;
+        storageMessage.hidden = false;
+      }
+
+      function storageFailure() {
+        storageAvailable = false;
+        showStorageMessage('이 기기에 저장할 수 없어요. 현재 화면에서는 계속 사용할 수 있지만, 새로고침하거나 닫으면 변경사항이 사라질 수 있어요.');
+      }
+
+      function validStoredData(data) {
+        if (!data || typeof data !== 'object' || Array.isArray(data) ||
+            data.version !== 1 || !Array.isArray(data.tasks) || data.tasks.length > MAX_TASKS) return false;
+        const ids = new Set();
+        return data.tasks.every(task => {
+          if (!task || typeof task !== 'object' || Array.isArray(task) ||
+              typeof task.id !== 'string' || !idPattern.test(task.id) || ids.has(task.id) ||
+              typeof task.title !== 'string' || task.title.length > MAX_TITLE_LENGTH ||
+              task.title.trim().length === 0 || typeof task.completed !== 'boolean') return false;
+          ids.add(task.id);
+          return true;
+        });
+      }
+
+      function loadTasks() {
+        let raw;
+        try {
+          raw = window.localStorage.getItem(STORAGE_KEY);
+        } catch {
+          storageFailure();
+          return seedTasks();
+        }
+        if (raw === null) return seedTasks();
+        try {
+          if (raw.length > MAX_STORAGE_BYTES || encoder.encode(raw).byteLength > MAX_STORAGE_BYTES) throw new Error('storage-size');
+          const parsed = JSON.parse(raw);
+          if (!validStoredData(parsed)) throw new Error('storage-shape');
+          return parsed.tasks.map(task => ({ id: task.id, title: task.title, completed: task.completed }));
+        } catch {
+          showStorageMessage('저장된 할 일을 읽을 수 없어 예시 3개로 복구했어요. 손상된 이 데모의 저장 데이터는 예시로 교체됩니다.');
+          return seedTasks();
+        }
+      }
+
+      let tasks = loadTasks();
+
+      function persistTasks() {
+        if (!storageAvailable) return;
+        try {
+          const serialized = JSON.stringify({ version: 1, tasks });
+          if (serialized.length > MAX_STORAGE_BYTES || encoder.encode(serialized).byteLength > MAX_STORAGE_BYTES) {
+            throw new Error('storage-size');
+          }
+          window.localStorage.setItem(STORAGE_KEY, serialized);
+        } catch {
+          storageFailure();
+        }
+      }
+
+      function uniqueTaskId() {
+        let id;
+        do {
+          localIdCounter += 1;
+          id = 'task-' + Date.now().toString(36) + '-' + localIdCounter.toString(36);
+        } while (tasks.some(task => task.id === id));
+        return id;
+      }
+
+      function updateProgress() {
+        const completed = tasks.filter(task => task.completed).length;
+        completedCount.textContent = String(completed);
+        totalCount.textContent = String(tasks.length);
+        progressDescription.textContent = completed + ' / ' + tasks.length + ' 완료';
+        fraction.classList.toggle('is-wide', tasks.length >= 10);
+        progressTrack.classList.toggle('is-dense', tasks.length > 20);
+        const segments = document.createDocumentFragment();
+        for (let i = 0; i < Math.max(tasks.length, 1); i += 1) {
+          const segment = document.createElement('span');
+          segment.className = 'progress-segment' + (i < completed ? ' is-complete' : '');
+          segments.appendChild(segment);
+        }
+        progressTrack.replaceChildren(segments);
+      }
+
+      function makeTaskRow(task) {
+        const row = document.createElement('li');
+        row.className = 'task-row';
+        row.dataset.odId = 'task-' + task.id;
+        row.dataset.taskId = task.id;
+        const checkbox = document.createElement('input');
+        checkbox.type = 'checkbox';
+        checkbox.className = 'task-checkbox';
+        checkbox.id = 'check-' + task.id;
+        checkbox.dataset.odId = 'checkbox-' + task.id;
+        checkbox.checked = task.completed;
+        const label = document.createElement('label');
+        label.className = 'task-title';
+        label.htmlFor = checkbox.id;
+        label.dataset.odId = 'title-' + task.id;
+        label.textContent = task.title;
+        const deleteButton = document.createElement('button');
+        deleteButton.type = 'button';
+        deleteButton.className = 'delete-button';
+        deleteButton.dataset.odId = 'delete-' + task.id;
+        deleteButton.setAttribute('aria-label', task.title + ' 삭제');
+        const icon = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+        icon.setAttribute('viewBox', '0 0 24 24');
+        icon.setAttribute('fill', 'none');
+        icon.setAttribute('stroke', 'currentColor');
+        icon.setAttribute('stroke-width', '1.75');
+        icon.setAttribute('stroke-linecap', 'round');
+        icon.setAttribute('stroke-linejoin', 'round');
+        icon.setAttribute('aria-hidden', 'true');
+        icon.setAttribute('focusable', 'false');
+        const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+        path.setAttribute('d', 'M4 7h16M9 7V4h6v3M6 7l1 13h10l1-13M10 11v5M14 11v5');
+        icon.appendChild(path);
+        deleteButton.appendChild(icon);
+        checkbox.addEventListener('change', () => {
+          task.completed = checkbox.checked;
+          updateProgress();
+          persistTasks();
+        });
+        deleteButton.addEventListener('click', () => {
+          const index = tasks.findIndex(item => item.id === task.id);
+          if (index < 0) return;
+          tasks.splice(index, 1);
+          row.remove();
+          emptyState.hidden = tasks.length > 0;
+          updateProgress();
+          persistTasks();
+          clearFormFeedback();
+          const nextRow = list.children[Math.min(index, list.children.length - 1)];
+          if (nextRow) nextRow.querySelector('.delete-button').focus();
+          else input.focus();
+          actionStatus.textContent = task.title + ' 삭제했어요.';
+        });
+        row.append(checkbox, label, deleteButton);
+        return row;
+      }
+
+      function clearFormFeedback() {
+        feedback.textContent = '';
+        input.removeAttribute('aria-invalid');
+      }
+
+      function rejectInput(message) {
+        feedback.textContent = message;
+        input.setAttribute('aria-invalid', 'true');
+        input.focus();
+      }
+
+      form.addEventListener('submit', event => {
+        event.preventDefault();
+        const title = input.value.trim();
+        if (!title) {
+          rejectInput('할 일을 적어주세요. 공백만 입력할 수는 없어요.');
+          return;
+        }
+        if (input.value.length > MAX_TITLE_LENGTH) {
+          rejectInput('할 일은 80자까지 입력할 수 있어요.');
+          return;
+        }
+        if (tasks.length >= MAX_TASKS) {
+          rejectInput('할 일은 100개까지 저장할 수 있어요. 먼저 하나를 삭제해주세요.');
+          return;
+        }
+        const task = { id: uniqueTaskId(), title, completed: false };
+        tasks.push(task);
+        list.appendChild(makeTaskRow(task));
+        emptyState.hidden = true;
+        updateProgress();
+        persistTasks();
+        input.value = '';
+        clearFormFeedback();
+        input.focus();
+        actionStatus.textContent = task.title + ' 추가했어요.';
+      });
+      input.addEventListener('input', clearFormFeedback);
+      input.addEventListener('keydown', event => {
+        if (event.key === 'Enter' && (event.isComposing || event.keyCode === 229)) event.preventDefault();
+      });
+      for (const task of tasks) list.appendChild(makeTaskRow(task));
+      emptyState.hidden = tasks.length > 0;
+      updateProgress();
+      persistTasks();
+    })();
+  </script>
+</body>
+</html>

@@ -24,6 +24,17 @@ Use the installed skill for brief attribution, confirmation, runtime availabilit
 
 Pass the brief and the chosen image references into that workflow; do not pretend an image path was attached when the tool received only text. Read back the same run's terminal result and delivery link. Confirm an accessible entry/artifact before reporting a usable design. Preserve successful image work if design creation fails.
 
+### Connection and artifact handling observed in the demo
+
+The [included demo](https://github.com/dudqks0319-cpu/app-design-five/tree/main/demo) exercised OpenDesign plugin 0.5.2 with application 0.24.1. Treat these observations as version-specific, and follow the installed tool's current schema:
+
+- Keep `collect_brief` → `confirm_brief` → `start_run` in one MCP connection. Brief drafts in this tested version are connection-local; opening a new connection between collection and confirmation loses attribution. A saved draft ID alone does not restore that state. If the installed workflow requires explicit permission to restart a brief, obtain it before recollecting.
+- Once `start_run` has accepted the run, keep its exact run and workflow identifiers. Reconnecting and polling that same accepted run worked in this demo; do not start a replacement run because the bridge closed. Closing an owned bridge and cancelling a shared asynchronous job are separate actions.
+- Use the returned `artifactRef.entryFile` as the explicit `get_artifact` entry when automatic entry discovery fails. In the demo, the default lookup failed while the explicit `index.html` lookup returned the complete source. Check truncation and actual file contents before exporting.
+- A local reference path in a text prompt is not an image attachment. Only report image inspection when the run's evidence establishes it; otherwise describe the written handoff actually supplied.
+
+These are routing instructions, not a bundled MCP client. Use the host's documented, authorized connection lifecycle and approval controls. Preserve the shared app, existing sessions and jobs; close only the task-owned connection.
+
 When the native design tools are absent, use an existing task-authorized on-demand runner only if the workspace documents that route. Read that runner's own guide and the specific tool schema. Do not enable all servers, bypass a denied tool, restart shared sessions or leave an owned bridge running. If no authorized route exists, report the missing capability rather than inventing endpoints or installing another runtime.
 
 Do not enter OpenDesign Cloud or BYOK sign-in/credit flows as an automatic fallback. A route change requires the user's choice. Tool failure is not consent to a different account or billing path.

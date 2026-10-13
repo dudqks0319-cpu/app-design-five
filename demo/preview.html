@@ -1,0 +1,10 @@
+<!doctype html>
+<html lang="ko">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>App Design Five — 브라우저 화면 크기 확인</title>
+<style>body{margin:0;padding:24px;background:#e8edf4;font-family:system-ui,-apple-system,"Apple SD Gothic Neo",sans-serif;color:#1d2c43}header{margin-bottom:20px}h1{font-size:20px;margin:0 0 8px}p{font-size:14px;margin:0 0 12px}a{color:#1553ce;margin-right:16px}iframe{display:block;border:0;background:white;box-shadow:0 8px 32px #17334f20}a:focus-visible{outline:3px solid #d97900;outline-offset:4px}</style>
+<header><h1>실제 앱을 브라우저 프레임에서 확인</h1><p id="viewport-label"></p><a href="?width=390">390×844 모바일 구성</a><a href="?width=1280">1280×900 데스크톱 구성</a><a href="app/index.html">앱 직접 열기</a></header>
+<iframe id="demo-frame" title="오늘 한 걸음 실제 앱" src="app/index.html"></iframe>
+<script>const width=new URLSearchParams(location.search).get('width')==='1280'?1280:390;const height=width===1280?900:844;const frame=document.getElementById('demo-frame');frame.width=width;frame.height=height;document.getElementById('viewport-label').textContent=width+'×'+height+' 브라우저 프레임입니다. 실제 휴대폰 검증과는 별도입니다.';</script>
+</html>

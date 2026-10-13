@@ -1,0 +1,251 @@
+{
+  "browser": "Aside",
+  "mode": "actual desktop browser interactions; mobile and desktop layouts rendered in same-origin frames",
+  "checks": [
+    {
+      "name": "initial seed and progress",
+      "pass": true,
+      "detail": {
+        "rows": 3,
+        "progress": "1 / 3 완료",
+        "feedback": "",
+        "storageMessage": "",
+        "storageVisible": false,
+        "emptyVisible": false,
+        "input": "",
+        "titles": [
+          "물 한 잔 마시기",
+          "10분 산책하기",
+          "책 5쪽 읽기"
+        ]
+      }
+    },
+    {
+      "name": "blank input rejected",
+      "pass": true,
+      "detail": {
+        "rows": 3,
+        "progress": "1 / 3 완료",
+        "feedback": "할 일을 적어주세요. 공백만 입력할 수는 없어요.",
+        "storageMessage": "",
+        "storageVisible": false,
+        "emptyVisible": false,
+        "input": "   ",
+        "titles": [
+          "물 한 잔 마시기",
+          "10분 산책하기",
+          "책 5쪽 읽기"
+        ]
+      }
+    },
+    {
+      "name": "add button and input clear",
+      "pass": true,
+      "detail": {
+        "rows": 4,
+        "progress": "1 / 4 완료",
+        "feedback": "",
+        "storageMessage": "",
+        "storageVisible": false,
+        "emptyVisible": false,
+        "input": "",
+        "titles": [
+          "물 한 잔 마시기",
+          "10분 산책하기",
+          "책 5쪽 읽기",
+          "데모 확인"
+        ]
+      }
+    },
+    {
+      "name": "complete toggle updates progress",
+      "pass": true,
+      "detail": {
+        "rows": 4,
+        "progress": "2 / 4 완료",
+        "feedback": "",
+        "storageMessage": "",
+        "storageVisible": false,
+        "emptyVisible": false,
+        "input": "",
+        "titles": [
+          "물 한 잔 마시기",
+          "10분 산책하기",
+          "책 5쪽 읽기",
+          "데모 확인"
+        ]
+      }
+    },
+    {
+      "name": "delete updates list and progress",
+      "pass": true,
+      "detail": {
+        "rows": 3,
+        "progress": "1 / 3 완료",
+        "feedback": "",
+        "storageMessage": "",
+        "storageVisible": false,
+        "emptyVisible": false,
+        "input": "",
+        "titles": [
+          "물 한 잔 마시기",
+          "10분 산책하기",
+          "책 5쪽 읽기"
+        ]
+      }
+    },
+    {
+      "name": "Enter adds task",
+      "pass": true,
+      "detail": {
+        "rows": 4,
+        "progress": "1 / 4 완료",
+        "feedback": "",
+        "storageMessage": "",
+        "storageVisible": false,
+        "emptyVisible": false,
+        "input": "",
+        "titles": [
+          "물 한 잔 마시기",
+          "10분 산책하기",
+          "책 5쪽 읽기",
+          "저장 확인"
+        ]
+      }
+    },
+    {
+      "name": "navigation reload persists task and completion",
+      "pass": true,
+      "detail": {
+        "rows": 4,
+        "progress": "2 / 4 완료",
+        "feedback": "",
+        "storageMessage": "",
+        "storageVisible": false,
+        "emptyVisible": false,
+        "input": "",
+        "titles": [
+          "물 한 잔 마시기",
+          "10분 산책하기",
+          "책 5쪽 읽기",
+          "저장 확인"
+        ]
+      }
+    },
+    {
+      "name": "HTML input remains harmless text",
+      "pass": true,
+      "detail": {
+        "markup": 0,
+        "executed": false,
+        "titles": [
+          "물 한 잔 마시기",
+          "10분 산책하기",
+          "책 5쪽 읽기",
+          "저장 확인",
+          "<img src=x onerror=window.__demoProbe=true>"
+        ]
+      }
+    },
+    {
+      "name": "input length bound",
+      "pass": true,
+      "detail": "maxlength=80"
+    },
+    {
+      "name": "corrupt storage recovers visibly",
+      "pass": true,
+      "detail": {
+        "rows": 3,
+        "progress": "1 / 3 완료",
+        "feedback": "",
+        "storageMessage": "저장된 할 일을 읽을 수 없어 예시 3개로 복구했어요. 손상된 이 데모의 저장 데이터는 예시로 교체됩니다.",
+        "storageVisible": true,
+        "emptyVisible": false,
+        "input": "",
+        "titles": [
+          "물 한 잔 마시기",
+          "10분 산책하기",
+          "책 5쪽 읽기"
+        ]
+      }
+    },
+    {
+      "name": "empty state and zero progress",
+      "pass": true,
+      "detail": {
+        "rows": 0,
+        "progress": "0 / 0 완료",
+        "feedback": "",
+        "storageMessage": "",
+        "storageVisible": false,
+        "emptyVisible": true,
+        "input": "",
+        "titles": []
+      }
+    },
+    {
+      "name": "100 task limit rejects another",
+      "pass": true,
+      "detail": {
+        "rows": 100,
+        "feedback": "할 일은 100개까지 저장할 수 있어요. 먼저 하나를 삭제해주세요."
+      }
+    },
+    {
+      "name": "storage failure retains in-memory use with warning",
+      "pass": true,
+      "detail": {
+        "rows": 4,
+        "progress": "1 / 4 완료",
+        "feedback": "",
+        "storageMessage": "이 기기에 저장할 수 없어요. 현재 화면에서는 계속 사용할 수 있지만, 새로고침하거나 닫으면 변경사항이 사라질 수 있어요.",
+        "storageVisible": true,
+        "emptyVisible": false,
+        "input": "",
+        "titles": [
+          "물 한 잔 마시기",
+          "10분 산책하기",
+          "책 5쪽 읽기",
+          "저장 오류 중 추가"
+        ]
+      }
+    },
+    {
+      "name": "390x844 real browser frame layout",
+      "pass": true,
+      "detail": {
+        "width": 390,
+        "height": 844,
+        "overflow": false,
+        "rows": 3,
+        "progress": "1 / 3 완료",
+        "smallTargets": 0
+      }
+    },
+    {
+      "name": "1280x900 real browser frame layout",
+      "pass": true,
+      "detail": {
+        "width": 1280,
+        "height": 900,
+        "overflow": false,
+        "rows": 3,
+        "progress": "1 / 3 완료"
+      }
+    }
+  ],
+  "screenshots": {
+    "mobile-390x844": "screenshots/mobile-390x844.png",
+    "app-added-completed": "screenshots/app-added-completed.png",
+    "desktop-1280x900": "screenshots/desktop-1280x900.png",
+    "five-concepts": "screenshots/five-concepts.png"
+  },
+  "passed": 15,
+  "total": 15,
+  "date": "2026-10-13",
+  "captureNote": "Accepted replacement captures use page screenshot with an explicit clip for mobile, and full-page desktop capture. Original faulty element captures are excluded.",
+  "physicalDeviceTested": false,
+  "sourceSha256": "eb23cb8abe9f6b5d381ca55f84fc0a8f23523d8463a91de880fe88fb5bc1cec5",
+  "storageErrorTest": "Fault injection: Storage.prototype.setItem throws QuotaExceededError in the browser."
+}

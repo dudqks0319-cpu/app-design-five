@@ -3,7 +3,7 @@ name: app-design-five
 description: "Create five distinct app UI image concepts, let the user choose or combine them, then turn that direction into an OpenDesign design and app implementation. Use for new apps, full UI/UX redesigns, or an explicit image-first design request. Do not start this workflow for routine bug fixes or status questions."
 license: MIT
 metadata:
-  version: "0.1.1"
+  version: "0.1.2"
 ---
 
 # App Design Five — five images before implementation
@@ -16,7 +16,7 @@ Follow this sequence: **five real UI images in Codex → user choice/feedback �
 - Read the target project's instructions, relevant UI and current-state notes. Reuse a recorded brief, generated images and user choice instead of restarting a completed stage.
 - Ask only for a product purpose, platform or other missing fact that would materially change the concepts. Resolve routine visual choices yourself.
 - Before the first tool-dependent stage, read [tool routing](references/tool-routing.md). Use installed tools and skills; do not install a provider or change models, accounts or execution modes implicitly.
-- Keep task evidence in a private project-local design folder, using the existing convention or `.local/design-five/<task-id>/`. Generated concepts and personal briefs are task artifacts, not files to add to this reusable skill package.
+- Keep task evidence in a private project-local design folder, using the existing convention or `.local/design-five/<task-id>/`. Generated concepts and personal briefs are task artifacts, not files to add to this reusable skill package. An explicitly authorized public demo may include fictional concepts, exported source and sanitized evidence; inspect that exact publication set and keep personal briefs, credentials and raw runtime logs private.
 
 ## 1. Define five comparable directions
 

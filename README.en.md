@@ -8,6 +8,18 @@ Five images → your choice or combination → design → requested app implemen
 
 Compare five distinct directions for the same core app screen. Choose one or combine them, such as “option 1's layout with option 4's colors.” The selected direction becomes an OpenDesign design using Local Codex, then an app implementation if requested. Routine bug fixes and status questions do not start this workflow.
 
+## Executed demo
+
+The fictional Korean task app **“오늘 한 걸음” (One Step Today)** exercised five real image generations → selection → OpenDesign with Local Codex → an interactive app. The user delegated selection; Codex chose option 2. **15 checks passed in Aside Browser**, covering interactions, persistence, error handling and two frame sizes.
+
+![Five independently generated concepts for the same app](demo/screenshots/five-concepts.png)
+
+<img src="demo/screenshots/mobile-390x844.png" width="300" alt="Actual app generated from option 2, rendered in a 390×844 browser frame">
+
+[Run the demo and read the evidence](demo/README.md) · [App HTML](demo/app/index.html) · [GeekNews draft in Korean](promotion/geeknews.md) · [Threads draft in Korean](promotion/threads.md)
+
+GitHub displays HTML source. Download the repository and open `demo/app/index.html` in a browser to interact with it. The mobile capture uses a 390×844 browser frame; physical-phone testing remains unverified.
+
 ## Workflow
 
 1. Establish the app's purpose, platform, core screen and required features.
@@ -82,7 +94,8 @@ Preserve the user's choice, execution mode and implementation/verification scope
 ## Evidence and limitations
 
 - Skill structure, internal document links and installed-file consistency have been checked; the skill was observed in Codex's skill catalog.
-- The complete five-image → OpenDesign → app implementation workflow using this skill has not yet been exercised.
+- On 2026-10-13, the fictional example above completed five real images → selection → OpenDesign with Local Codex → exported app → actual browser checks. This is evidence for one case, not a guarantee across apps or environments.
+- Brief collection, confirmation and run start needed one MCP connection. After the run was accepted, reconnecting with the same identifiers worked. [Observed connection conditions](references/tool-routing.md#connection-and-artifact-handling-observed-in-the-demo) are now documented.
 - The external installation CLI command has not yet been exercised for this project.
 - Report images, design results, source implementation, local checks, real-device use and release status separately, based on observed evidence. Disclose skipped verification.
 
@@ -90,7 +103,7 @@ Preserve the user's choice, execution mode and implementation/verification scope
 
 One English `SKILL.md` is the canonical agent instruction file; user guides are available in four languages. `agents/openai.yaml` holds Codex UI metadata. `references/` explains tool routing and the selected-design handoff.
 
-Generated images and private briefs belong in the target app's local task folder. `.local/` records, personal screenshots and credentials are excluded from distribution. This package includes no executable scripts, telemetry or automatic updater.
+Ordinary generated images and personal briefs belong in each target app's local task folder. The explicitly authorized fictional demo includes images, exported app source and sanitized evidence in `demo/`. `.local/` records, personal screenshots and credentials are excluded from distribution. No installer, background script, telemetry or automatic updater is included. The demo contains browser-only JavaScript and local storage.
 
 ## License and references
 
